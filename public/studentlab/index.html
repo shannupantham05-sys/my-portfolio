@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Management System</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: #0b0d10; color: #f3f4f6; padding: 28px 18px; }
+    .box { max-width: 960px; margin: 0 auto; }
+    .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .top h1 { font-size: 24px; }
+    .top p { color: #9ca3af; font-size: 13px; margin-top: 4px; }
+    .back { color: #fff; text-decoration: none; border: 1px solid #2b323d; background: #141820; padding: 8px 14px; border-radius: 8px; font-size: 13px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .card { background: #12161d; border: 1px solid #222934; border-radius: 10px; padding: 14px; }
+    .card small { color: #9ca3af; font-size: 11px; text-transform: uppercase; }
+    .card b { display: block; font-size: 22px; color: #60a5fa; margin-top: 4px; }
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    input, select { padding: 9px 11px; border-radius: 8px; border: 1px solid #2a313d; background: #0c0f14; color: #fff; font-size: 13px; }
+    button { padding: 9px 14px; border-radius: 8px; border: none; background: #2563eb; color: #fff; font-weight: 600; cursor: pointer; font-size: 13px; }
+    .rm { background: transparent; border: 1px solid #4c262b; color: #f87171; padding: 5px 9px; font-size: 12px; }
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid #1e2530; }
+    th { color: #9ca3af; font-size: 11px; text-transform: uppercase; }
+    .tag { background: #172554; color: #93c5fd; padding: 3px 8px; border-radius: 999px; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="top">
+      <div>
+        <h1>Student Management System</h1>
+        <p>Add students, search by name or roll number, and track attendance &amp; grades.</p>
+      </div>
+      <a class="back" href="/">← Back to Portfolio</a>
+    </div>
+
+    <div class="grid-3">
+      <div class="card"><small>Total Students</small><b id="total">0</b></div>
+      <div class="card"><small>Avg Attendance</small><b id="avg">0%</b></div>
+      <div class="card"><small>Courses</small><b>3</b></div>
+    </div>
+
+    <div class="card" style="margin-bottom: 16px;">
+      <form id="addForm">
+        <input id="sName" type="text" placeholder="Student Name" required />
+        <input id="sRoll" type="text" placeholder="Roll No (e.g. CS104)" required />
+        <select id="sCourse">
+          <option value="B.Tech CSE">B.Tech CSE</option>
+          <option value="B.Sc Computer Science">B.Sc Computer Science</option>
+          <option value="BCA Web &amp; App">BCA Web &amp; App</option>
+        </select>
+        <input id="sAtt" type="number" min="0" max="100" placeholder="Attendance %" required />
+        <input id="sGrade" type="text" placeholder="Grade (e.g. A+)" required />
+        <button type="submit">+ Add Student</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="filters">
+        <input id="search" type="text" placeholder="Search name or roll..." />
+        <select id="courseFilter">
+          <option value="ALL">All Courses</option>
+          <option value="B.Tech CSE">B.Tech CSE</option>
+          <option value="B.Sc Computer Science">B.Sc Computer Science</option>
+          <option value="BCA Web &amp; App">BCA Web &amp; App</option>
+        </select>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Roll</th><th>Name</th><th>Course</th><th>Attendance</th><th>Grade</th><th>Action</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    let list = [
+      { roll: "CS101", name: "Aarav Sharma", course: "B.Tech CSE", att: 92, grade: "A+" },
+      { roll: "CS102", name: "Diya Nair", course: "BCA Web & App", att: 88, grade: "A" },
+      { roll: "CS103", name: "Rohan Verma", course: "B.Sc Computer Science", att: 81, grade: "B+" }
+    ];
+
+    const rows = document.getElementById("rows");
+    const total = document.getElementById("total");
+    const avg = document.getElementById("avg");
+    const search = document.getElementById("search");
+    const courseFilter = document.getElementById("courseFilter");
+
+    function draw() {
+      const q = search.value.trim().toLowerCase();
+      const cf = courseFilter.value;
+      const items = list.filter((s) =>
+        (cf === "ALL" || s.course === cf) &&
+        (s.name.toLowerCase().includes(q) || s.roll.toLowerCase().includes(q))
+      );
+
+      rows.innerHTML = items.map((s) => {
+        const realIdx = list.indexOf(s);
+        return `<tr>
+          <td><span class="tag">${s.roll}</span></td>
+          <td>${s.name}</td>
+          <td>${s.course}</td>
+          <td>${s.att}%</td>
+          <td><b>${s.grade}</b></td>
+          <td><button class="rm" onclick="delStudent(${realIdx})">Remove</button></td>
+        </tr>`;
+      }).join("");
+
+      total.textContent = list.length;
+      avg.textContent = list.length
+        ? Math.round(list.reduce((a, b) => a + Number(b.att), 0) / list.length) + "%"
+        : "0%";
+    }
+
+    window.delStudent = function(idx) {
+      list.splice(idx, 1);
+      draw();
+    };
+
+    document.getElementById("addForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      list.push({
+        name: document.getElementById("sName").value.trim(),
+        roll: document.getElementById("sRoll").value.trim().toUpperCase(),
+        course: document.getElementById("sCourse").value,
+        att: Number(document.getElementById("sAtt").value),
+        grade: document.getElementById("sGrade").value.trim().toUpperCase()
+      });
+      e.target.reset();
+      draw();
+    });
+
+    search.addEventListener("input", draw);
+    courseFilter.addEventListener("change", draw);
+    draw();
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <title>WeatherLab | Weather Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-icon">✳</span><span>weather<span>lab</span><small>WEATHER INTELLIGENCE</small></span></a>
+    <p class="side-label">WORKSPACE</p>
+    <nav><a class="active" href="#overview">◫ <span>Overview</span></a><a href="#forecast">◷ <span>Forecast</span></a><a href="#analytics">⌁ <span>Analytics</span></a><a href="#global">◎ <span>Global weather</span></a></nav>
+    <p class="side-label saved-label">SAVED LOCATIONS <button id="addCity">+</button></p>
+    <div class="saved" id="savedCities">
+      <button class="saved-city active" data-city="Seattle"><i></i><span>Seattle<small>United States</small></span><b>16°</b></button>
+      <button class="saved-city" data-city="London"><i></i><span>London<small>United Kingdom</small></span><b>14°</b></button>
+      <button class="saved-city" data-city="Tokyo"><i></i><span>Tokyo<small>Japan</small></span><b>22°</b></button>
+    </div>
+    <div class="sidebar-bottom"><div class="tip"><span>✦</span><b>Weather insights,<br>one step ahead.</b><p>Explore atmospheric patterns with WeatherLab.</p><a href="#analytics">Explore analytics ↗</a></div><div class="profile"><div class="avatar">WL</div><span>WeatherLab User<small>Personal workspace</small></span><b>•••</b></div></div>
+  </aside>
+
+  <main id="overview">
+    <header class="topbar"><div class="mobile-brand">✳ weatherlab</div><div class="crumb">Workspace <span>/</span> <b>Overview</b></div><div class="top-right"><span class="demo"><i></i> DEMO DATA</span><button id="unitToggle" class="round">°C</button><button id="themeToggle" class="round">◐</button><div class="avatar">WL</div></div></header>
+    <section class="welcome"><div><div class="eyebrow">WEATHER AT A GLANCE <i></i></div><h1>Weather overview<span>.</span></h1><p>A clear view of the atmosphere, wherever you are.</p></div><div class="search"><span>⌕</span><input id="citySearch" placeholder="Search city..." autocomplete="off"><button id="searchBtn">Search</button></div></section>
+
+    <section class="hero">
+      <article class="panel current">
+        <div class="panel-top"><div>⌖ <b id="cityName">Seattle, United States</b><small>CURRENT LOCATION</small></div><button class="dots">•••</button></div>
+        <div class="current-main"><div><div class="temp"><span id="temperature">16</span><sup>°</sup></div><div class="condition" id="condition">Partly cloudy</div><div class="feels">Feels like <b id="feels">14°</b></div></div><div class="weather-illustration"><div class="sun"></div><div class="cloud"></div><div class="cloud small"></div></div></div>
+        <div class="divider"></div>
+        <div class="stats">
+          <div><span>⌁</span><small>WIND SPEED</small><b id="wind">12 <em>km/h</em></b></div>
+          <div><span>◉</span><small>HUMIDITY</small><b id="humidity">68<em>%</em></b></div>
+          <div><span>◌</span><small>PRESSURE</small><b id="pressure">1016<em> hPa</em></b></div>
+          <div><span>☂</span><small>RAIN CHANCE</small><b id="rain">24<em>%</em></b></div>
+        </div>
+      </article>
+      <article class="panel air">
+        <div class="panel-top"><div><small>ENVIRONMENT</small><h3>Air quality index</h3></div><span class="info">i</span></div>
+        <div class="aqi">42<span>/ 100</span></div><div class="good"><i></i> Good</div><div class="meter"><i></i></div>
+        <p>Air quality is considered satisfactory, with little or no risk.</p>
+        <div class="air-bottom"><span>PM2.5 <b>8.4 μg/m³</b></span><span>PM10 <b>16 μg/m³</b></span></div>
+      </article>
+    </section>
+
+    <section class="block" id="forecast">
+      <div class="section-head"><div><div class="eyebrow">PLAN AHEAD</div><h2>Forecast</h2></div><div class="tabs"><button class="active" data-range="today">Today</button><button data-range="tomorrow">Tomorrow</button><button data-range="week">Next 7 days</button></div></div>
+      <div class="forecast-layout"><div class="forecast" id="forecastCards">
+        <article class="day-card selected"><div class="day">Today <small>NOW</small></div><div class="weather-emoji">🌤</div><b>16°</b><p>Partly cloudy</p><footer><span>H: 19°</span><span>L: 12°</span></footer></article>
+        <article class="day-card"><div class="day">Thu</div><div class="weather-emoji">☀️</div><b>18°</b><p>Mostly sunny</p><footer><span>H: 20°</span><span>L: 13°</span></footer></article>
+        <article class="day-card"><div class="day">Fri</div><div class="weather-emoji">🌦️</div><b>15°</b><p>Light rain</p><footer><span>H: 17°</span><span>L: 11°</span></footer></article>
+        <article class="day-card"><div class="day">Sat</div><div class="weather-emoji">⛅</div><b>17°</b><p>Cloudy</p><footer><span>H: 19°</span><span>L: 12°</span></footer></article>
+        <article class="day-card"><div class="day">Sun</div><div class="weather-emoji">🌧️</div><b>13°</b><p>Rain showers</p><footer><span>H: 15°</span><span>L: 10°</span></footer></article>
+        <article class="day-card"><div class="day">Mon</div><div class="weather-emoji">🌤</div><b>18°</b><p>Mostly sunny</p><footer><span>H: 21°</span><span>L: 13°</span></footer></article>
+        <article class="day-card"><div class="day">Tue</div><div class="weather-emoji">☀️</div><b>20°</b><p>Sunny</p><footer><span>H: 22°</span><span>L: 14°</span></footer></article>
+      </div>
+      <aside class="panel rain-panel"><div class="panel-top"><div><small>PRECIPITATION</small><h3>Chance of rain</h3></div><span class="trend">↗ 8%</span></div><div class="rain-value">24<span>%</span></div><p>Low probability throughout the afternoon.</p><div class="small-chart"><canvas id="rainChart"></canvas></div><div class="axis-labels"><span>09 AM</span><span>12 PM</span><span>03 PM</span><span>06 PM</span><span>09 PM</span></div></aside></div>
+    </section>
+
+    <section class="block" id="analytics">
+      <div class="section-head"><div><div class="eyebrow">WEATHER TRENDS</div><h2>Atmospheric analytics</h2></div><div class="chart-tools"><span><i class="legend temp-legend"></i> Temperature</span><span><i class="legend humidity-legend"></i> Humidity</span><select id="chartRange"><option value="24">Last 24 hours</option><option value="7">Last 7 days</option></select></div></div>
+      <div class="analytics"><article class="panel chart-panel"><div class="chart-title"><div><h3>Temperature & humidity</h3><p>Hourly atmospheric conditions</p></div><button class="dots">•••</button></div><div class="main-chart"><canvas id="climateChart"></canvas></div><div class="chart-footer"><span><b>16°C</b> Current temperature</span><span><b>68%</b> Relative humidity</span><small>Illustrative dataset</small></div></article>
+      <article class="panel pressure-panel"><div class="chart-title"><div><h3>Pressure trend</h3><p>Atmospheric pressure · hPa</p></div><span class="pressure-icon">◌</span></div><div class="pressure-number">1016 <small>hPa</small></div><div class="pressure-note"><b>↗ 2.4 hPa</b> over 24 hours</div><div class="pressure-chart"><canvas id="pressureChart"></canvas></div><div class="axis-labels"><span>12 AM</span><span>06 AM</span><span>12 PM</span><span>06 PM</span></div></article></div>
+    </section>
+
+    <section class="block" id="global"><div class="section-head"><div><div class="eyebrow">AROUND THE WORLD</div><h2>Global conditions</h2></div><button id="refreshCities" class="outline">↻ Refresh locations</button></div>
+      <div class="global-layout"><article class="panel map-panel"><div class="map-head"><div><h3>Global weather map</h3><p>Illustrative atmospheric overview</p></div><span class="map-live"><i></i> GLOBAL VIEW</span></div><div class="map"><div class="map-lines"></div><div class="continent north"></div><div class="continent south"></div><div class="continent europe"></div><div class="continent asia"></div><div class="continent africa"></div><span class="pin p1">☀️</span><span class="pin p2">☁️</span><span class="pin p3">🌧️</span><span class="pin p4">⛅</span><span class="pin p5">☀️</span><span class="pin p6">🌦️</span><div class="map-note"><b>Explore global weather</b><span>Conditions across selected regions</span></div></div></article>
+      <article class="cities"><div class="cities-head"><h3>Other large cities</h3><a href="#global">Show all ↗</a></div><div class="city-list" id="cityList"><div class="city-row"><div><small>UNITED STATES</small><b>California</b><span>Mostly sunny</span></div><div><i>🌤</i><strong>29°</strong></div></div><div class="city-row"><div><small>CHINA</small><b>Beijing</b><span>Cloudy</span></div><div><i>🌧️</i><strong>19°</strong></div></div><div class="city-row"><div><small>ISRAEL</small><b>Jerusalem</b><span>Sunny</span></div><div><i>☀️</i><strong>31°</strong></div></div></div></article></div>
+    </section>
+    <footer>© 2026 WeatherLab · Academic project dashboard <span>Frontend demo · Simulated weather data</span></footer>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+</body></html>
