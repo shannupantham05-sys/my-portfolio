@@ -43,7 +43,7 @@ const projects = [
   {
     type: "DATA UI",
     title: "Weather Dashboard",
-    href: "/weatherlab/index.html",
+    href: "./weatherlab/index.html",
     cta: "View live demo",
     text: "A weather dashboard with forecast cards, interactive charts and a responsive layout, built with demo data.",
     stack: ["HTML", "CSS", "JavaScript", "Chart.js"],
@@ -51,7 +51,7 @@ const projects = [
   {
     type: "WEB APPLICATION",
     title: "Student Management System",
-    href: "/studentlab/index.html",
+    href: "./studentlab/index.html",
     cta: "View live demo",
     text: "A clean dashboard concept for managing student information, records and everyday academic workflows.",
     stack: ["React", "JavaScript", "CSS"],
@@ -180,7 +180,7 @@ function App() {
 
         <div className="hero-visual">
           <div className="photo-frame">
-            <img src="/profile.jpeg" alt="Shannu profile portrait" />
+            <img src="./profile.jpeg" alt="Shannu profile portrait" />
             <div className="photo-overlay"></div>
             <div className="photo-caption">
               <span>THE PERSON BEHIND THE CODE</span>
@@ -377,7 +377,7 @@ function App() {
 
               <a
                 className="text-btn project-link"
-                href="/certificates/python-ai.pdf"
+                href="./certificates/python-ai.pdf"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -387,7 +387,7 @@ function App() {
 
             <a
               className="project-arrow"
-              href="/certificates/python-ai.pdf"
+              href="./certificates/python-ai.pdf"
               target="_blank"
               rel="noreferrer"
               aria-label="Click now to open certificate"
